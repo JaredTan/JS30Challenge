@@ -20,27 +20,32 @@
   let cities = [];
   fetch(endpoint)
     .then(response => response.json())
-    .then(response => cities.push(...response))
+    .then(data => cities.push(...data))
 
-  const findMatches = (input, cities) => {
-    return cities.map(place => {
+  const findMatches = function(input, cities) {
+    return cities.filter(place => {
       let regex = new RegExp(input, 'gi');
       return place.city.match(regex) || place.state.match(regex);
     })
   }
 
-  const search = (e) => {
+  const suggestion = document.querySelector('.suggestions');
+
+  const search = function(e) {
     let matches = findMatches(this.value, cities);
-    console.log(matches);
     const htmlMatches = matches.map( match => {
-      const regex = new RegExp(e.currentTarget.value, 'gi');
-      const newCity = match.city.replace(regex, `<li class='hl'>${city}</li>`);
-      const newState = match.state.replace(regex, `<li class='li'>${state}</li>`);
-      return (
-        `<li>${newCity}, ${newState}</li>`
-        `<li>${this.currentTarget.population}</li>`
-      )
-    })
+      const regex = new RegExp(this.value, 'gi');
+      const newCity = match.city.replace(regex, `<span class='hl'>${this.value}</span>`);
+      const newState = match.state.replace(regex, `<span class='hl'>${this.value}</span>`);
+      return `
+        <li>
+          <span class='name'>${newCity}, ${newState}</span>
+          <span class='population'>${match.population}</span>
+        </li>
+      `;
+    }).join('');
+    console.log(htmlMatches);
+    suggestion.innerHTML = htmlMatches;
   }
 
   const input = document.querySelector('.search');
