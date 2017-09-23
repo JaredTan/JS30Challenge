@@ -20,37 +20,41 @@
   let cities = [];
   fetch(endpoint)
     .then(response => response.json())
-    .then(data => cities.push(...data))
+    .then(responseData => {
+      cities.push(...responseData);
+    });
 
-  const findMatches = function(input, cities) {
-    return cities.filter(place => {
-      let regex = new RegExp(input, 'gi');
-      return place.city.match(regex) || place.state.match(regex);
+  const selectCities = (input, cities) => {
+    const regex = new RegExp(input, 'gi');
+    return cities.filter( place => {
+      return ( place.city.match(regex) || place.state.match(regex))
     })
   }
 
   const suggestion = document.querySelector('.suggestions');
 
   const search = function(e) {
-    let matches = findMatches(this.value, cities);
-    const htmlMatches = matches.map( match => {
-      const regex = new RegExp(this.value, 'gi');
-      const newCity = match.city.replace(regex, `<span class='hl'>${this.value}</span>`);
-      const newState = match.state.replace(regex, `<span class='hl'>${this.value}</span>`);
-      return `
-        <li>
-          <span class='name'>${newCity}, ${newState}</span>
-          <span class='population'>${match.population}</span>
-        </li>
-      `;
+    const selectedCities = selectCities(this.value, cities);
+    const regex = new RegExp(this.value, 'gi');
+    const cityHTML = selectedCities.map( place => {
+    const newCity = place.city.replace(regex, `<span class='hl'>${this.value}</span>`);
+    const newState = place.state.replace(regex, `<span class='hl'>${this.value}</span>`);
+      return (
+        `
+          <li>
+            <span class='name'>${newCity}, ${newState}</span>
+            <span class='population'>${place.population}</span>
+          </li>
+        `
+      )
     }).join('');
-    console.log(htmlMatches);
-    suggestion.innerHTML = htmlMatches;
+    suggestion.innerHTML = cityHTML;
   }
 
   const input = document.querySelector('.search');
-  input.addEventListener('change', search)
-  input.addEventListener('keyup', search)
+  input.addEventListener('change', search);
+  input.addEventListener('keyup', search);
+
 
 </script>
   </body>
