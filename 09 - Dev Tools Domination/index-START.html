@@ -19,27 +19,70 @@
 
     // Regular
 
+    console.log('hi');
+
     // Interpolated
+
+    console.log(`${dogs}`);
 
     // Styled
 
+    console.log('%c I am some great text', 'font-size:50px; background:red; text-shadow: 10px 10px 0 blue')
+
+
     // warning!
+
+    console.warn('nooo')
 
     // Error :|
 
+    console.error('lol')
+
     // Info
+
+    console.info('heyo!!  ')
 
     // Testing
 
+    console.assert(1+2 === 4, 'nope')
+
     // clearing
+
+    console.clear();
 
     // Viewing DOM Elements
 
+    const p = document.querySelector('p');
+    console.log(p);
+    console.dir(p);
+
     // Grouping together
+
+    dogs.forEach( dog => {
+      console.group(`${dog.name}`);
+      console.log(`${dog.name}`);
+      console.log(`${dog.name} is ${dog.age} years old`)
+      console.groupEnd(`${dog.name}`);
+    })
 
     // counting
 
+    console.count('hi');
+    console.count('hi');
+    console.count('hi');
+    console.count('hi');
+    console.count('hi');
+    console.count('hi');
+    console.count('hi');
+    console.count('hi');
     // timing
+
+    console.time('fetching data');
+    fetch('https://pokeapi.co/api/v2/pokemon/squirtle')
+      .then(data => data.json())
+      .then(dataJson => {
+        console.timeEnd('fetching data');
+      })
 
   </script>
 </body>
