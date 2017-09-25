@@ -7,6 +7,22 @@
 </head>
 <body>
 <script>
+
+  const secretCode = 'keith'
+  const stash = [];
+
+  const addKey = function(e) {
+    stash.push(e.key)
+    if (stash.length > 5) {
+      stash.shift();
+    }
+    console.log(stash.join(''));
+    if (stash.join('').includes(secretCode)) {
+      cornify_add();
+    }
+  }
+
+  document.addEventListener('keyup', addKey)
 </script>
 </body>
 </html>
