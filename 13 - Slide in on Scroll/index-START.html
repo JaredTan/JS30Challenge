@@ -58,6 +58,25 @@
       };
     }
 
+    const images = document.querySelectorAll('img')
+
+    const slide = function(e) {
+
+      currentHeightBottom = window.scrollY + window.innerHeight;
+      currentHeightTop = window.scrollY;
+      images.forEach( image => {
+        const halfDist = image.offsetTop + (image.height / 2);
+        const bottomDist = image.offsetTop + image.height;
+        if (currentHeightBottom >= halfDist && currentHeightTop <= bottomDist ) {
+          image.classList.add('active');
+        } else {
+          image.classList.remove('active');
+        }
+      })
+    }
+
+    window.addEventListener('scroll', debounce(slide, 20))
+
   </script>
 
   <style>
