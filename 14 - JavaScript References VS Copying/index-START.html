@@ -8,9 +8,25 @@
 
   <script>
     // start with strings, numbers and booleans
+    let a = 'hi';
+    let b = a;
+    b = 'yo'
 
+    console.log(a);
+    console.log(b);
+
+    let c = 3;
+    let d = c;
+
+    d = 4;
+    console.log(c);
+    console.log(d);
     // Let's say we have an array
     const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
+    // let p2 = players;
+    // players[2] = 'lol'
+    // console.log(p2);
+    // console.log(players);
 
     // and we want to make a copy of it.
 
@@ -27,24 +43,71 @@
     // So, how do we fix this? We take a copy instead!
 
     // one way
+    let p2 = players.slice();
+    p2[2] = 'lol';
+    console.log(players);
+    console.log(p2);
+
 
     // or create a new array and concat the old one in
 
+    let p3 = [].concat(players);
+    p3[2] = 'lol3';
+    console.log(players);
+    console.log(p3);
     // or use the new ES6 Spread
+
+    let p4 = [...players];
+    p4[2] = 'lol4';
+    console.log(players);
+    console.log(p4);
 
     // now when we update it, the original one isn't changed
 
     // The same thing goes for objects, let's say we have a person object
 
+    let jard = {
+      name: 'jared',
+      age: 23,
+      foods: {
+        japanese: 'sushi',
+        italian: 'pizza'
+      }
+    }
+
     // with Objects
+    //
+    // let tan = jard;
+    // tan.name = 'tan';
+    // console.log(jard);
+    // console.log(tan);
 
     // and think we make a copy:
 
     // how do we take a copy instead?
 
+    let tan = Object.assign({}, jard, {name: 'tan'});
+    tan.foods.mexican = 'tacos';
+    console.log(jard);
+    console.log(tan);
+
     // We will hopefully soon see the object ...spread
 
     // Things to note - this is only 1 level deep - both for Arrays and Objects. lodash has a cloneDeep method, but you should think twice before using it.
+
+    let jard2 = {
+      name: 'jared',
+      age: 23,
+      foods: {
+        japanese: 'sushi',
+        italian: 'pizza'
+      }
+    }
+    let tan2 = JSON.parse(JSON.stringify(jard2));
+    tan2.name = 'tan2';
+    tan2.foods.mexican = 'tacos'
+    console.log(jard2);
+    console.log(tan2);
 
   </script>
 
