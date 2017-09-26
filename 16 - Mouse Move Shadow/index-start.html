@@ -7,7 +7,7 @@
 <body>
 
   <div class="hero">
-    <h1 contenteditable>🔥WOAH!</h1>
+    <h1 contenteditable>🔥:D</h1>
   </div>
 
   <style>
@@ -35,6 +35,32 @@
   </style>
 
 <script>
+
+  const page = document.querySelector('.hero');
+  const title = document.querySelector('h1');
+
+  const shadow = function(e) {
+    x = e.offsetX;
+    y = e.offsetY;
+    if (this !== e.target) {
+      x = x + e.target.offsetLeft;
+      y = y + e.target.offsetTop;
+    }
+
+    let shadowDist = 100;
+
+    let xDist = ((x / page.offsetWidth) * shadowDist) - (shadowDist/2);
+    let yDist = ((y / page.offsetHeight) * shadowDist) - (shadowDist/2);
+    title.style.textShadow = `
+      ${-xDist}px ${-yDist}px 0 rgba(255,0,255,0.7),
+      ${xDist}px ${-yDist}px 0 rgba(0,0,255,0.7),
+      ${-yDist}px ${-xDist}px 0 rgba(255,0,0,0.7),
+      ${yDist}px ${xDist}px 0 rgba(255,255,0,0.7)
+    `
+  }
+
+  page.addEventListener('mousemove', shadow);
+
 </script>
 </body>
 </html>

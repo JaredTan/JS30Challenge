@@ -57,11 +57,12 @@
   }
 
   const updateItem = function(e) {
-    if (!e.target.matches('input')) return;
-    const idx = e.target.dataset.index
-    items[idx].done = !items[idx].done
-    localStorage.setItem('items', JSON.stringify(items));
-    populateList();
+    if (e.target.matches('input')) {
+      const idx = e.target.dataset.index
+      items[idx].done = !items[idx].done
+      localStorage.setItem('items', JSON.stringify(items));
+      populateList();
+    }
   }
 
   const removeItem = function(e) {
