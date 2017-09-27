@@ -17,18 +17,37 @@
       min-height: 100vh;
     }
 
+    .bands-main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width:100%;
+    }
+
+    .input {
+      margin: 5px auto;
+      align-self: center;
+      background: gray;
+      padding: 5px;
+      border-radius: 10px;
+    }
+
     #bands {
-      list-style: inside square;
-      font-size: 20px;
+      list-style: inside;
+      font-size: 15px;
+      border-radius: 5px;
       background: white;
-      width: 500px;
+      width: 50%;
+      height: 50%;
       margin: auto;
       padding: 0;
       box-shadow: 0 0 0 20px rgba(0, 0, 0, 0.05);
     }
     #bands li {
       border-bottom: 1px solid #efefef;
-      padding: 20px;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
     }
     #bands li:last-child {
       border-bottom: 0;
@@ -39,12 +58,86 @@
       text-decoration: none;
     }
 
-  </style>
 
-  <ul id="bands"></ul>
+  </style>
+  <div class="bands-main">
+    <ul id="bands"></ul>
+    <form class="input">
+      <input type="text" name="add-band" value="" class='input-text'>
+      <input type="submit" value="Add band!">
+    </form>
+  </div>
 
 <script>
-const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
+let bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
+
+const bandsList = document.getElementById('bands');
+const buttons = document.querySelectorAll('.delete');
+const input = document.querySelector('.input-text');
+const form = document.querySelector('.input');
+
+
+const qSort = bands => {
+  if (bands.length < 2) {
+    return bands;
+  }
+  let pivotTitle = titleToCheck(bands[0]);
+  let left = [];
+  let right = [];
+
+  bands.slice(1).forEach( band => {
+    let newTitle = titleToCheck(band);
+    if (newTitle >= pivotTitle) {
+      right.push(band);
+    } else {
+      left.push(band);
+    }
+  })
+  return qSort(left).concat([bands[0]]).concat(qSort(right));
+}
+
+const titleToCheck = title => {
+  let firstWord = title.split(' ')[0].toLowerCase();
+  let titleToCheck;
+  if ( firstWord === 'the' || firstWord === 'a' || firstWord === 'an') {
+    titleToCheck = title.split(' ').slice(1).join(' ');
+  } else {
+    titleToCheck = title;
+  }
+  return titleToCheck.toLowerCase();
+}
+
+const addBand = function(e) {
+  e.preventDefault();
+  bands.push(input.value);
+  setBands(bands);
+  this.reset();
+}
+
+const setBands = function(bands) {
+  bandsList.innerHTML = qSort(bands).map( (band, idx) => {
+    return `
+    <li class='band'>
+      ${band}
+      <button class='delete' data-index=${idx}>Delete</button>
+    </li>
+    `
+  }).join(' ');
+}
+
+const deleteBand = function(e) {
+  if (!e.target.matches('button')) return;
+  const idxToDelete = e.target.dataset.index;
+  newBands = qSort(bands);
+  newBands.splice(idxToDelete, 1);
+  bands = newBands;
+  setBands(bands);
+}
+
+setBands(bands);
+
+form.addEventListener('submit', addBand);
+bandsList.addEventListener('click', deleteBand)
 
 
 </script>
