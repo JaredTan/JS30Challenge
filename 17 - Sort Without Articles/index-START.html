@@ -96,6 +96,12 @@ const qSort = bands => {
   return qSort(left).concat([bands[0]]).concat(qSort(right));
 }
 
+const regexReplace = band => {
+  return band.replace(/^the |an |a /i, '').trim();
+}
+
+const regexSort = bands => bands.sort( (a, b) => (regexReplace(a) < regexReplace(b) ? -1 : 1));
+
 const titleToCheck = title => {
   let firstWord = title.split(' ')[0].toLowerCase();
   let titleToCheck;
@@ -110,12 +116,12 @@ const titleToCheck = title => {
 const addBand = function(e) {
   e.preventDefault();
   bands.push(input.value);
-  setBands(bands);
+  setBands(qSort(bands));
   this.reset();
 }
 
-const setBands = function(bands) {
-  bandsList.innerHTML = qSort(bands).map( (band, idx) => {
+const setBands = function(sortedBands) {
+  bandsList.innerHTML = sortedBands.map( (band, idx) => {
     return `
     <li class='band'>
       ${band}
@@ -134,7 +140,8 @@ const deleteBand = function(e) {
   setBands(bands);
 }
 
-setBands(bands);
+setBands(regexSort(bands));
+
 
 form.addEventListener('submit', addBand);
 bandsList.addEventListener('click', deleteBand)

@@ -6,10 +6,11 @@
 </head>
 <body>
   <ul class="videos">
+    <h2 class='total'></h2>
     <li data-time="5:43">
       Video 1
     </li>
-    <li data-time="2:33">
+    <li data-time="2:43">
       Video 2
     </li>
     <li data-time="3:45">
@@ -182,6 +183,24 @@
     </li>
   </ul>
 <script>
+
+const videos = Array.from(document.querySelectorAll('li'));
+const total = document.querySelector('.total');
+
+const seconds = videos.map( video => {
+  const [min, sec] = video.dataset.time.split(':').map(parseFloat);
+  return (60*min + sec);
+}).reduce((total, secondsOfVid) => total + secondsOfVid);
+
+const hours = Math.floor(seconds / 3600);
+let secondsLeft = seconds % 3600;
+const minutes = Math.floor(secondsLeft / 60);
+ secondsLeft = seconds % 60;
+
+ total.innerHTML = `${hours} hours, ${minutes} minutes, and ${secondsLeft} seconds total.`;
+console.log(hours, minutes, secondsLeft);
+
+
 </script>
 </body>
 </html>
