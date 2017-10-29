@@ -40,6 +40,17 @@
 <button></button>
 <script>
 
+  const divs = document.querySelectorAll('div');
+
+  const handleClick = function(e) {
+    e.stopPropagation();
+    console.log(this.classList.value);
+  }
+
+  divs.forEach(div => {
+    div.addEventListener('click', handleClick, {capture: false, once: true});
+  });
+
 </script>
 </body>
 </html>
