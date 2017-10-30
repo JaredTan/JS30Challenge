@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Graph?</title>
+    <link rel="stylesheet" href="stylelol.css">
+  </head>
+  <body>
+
+    <div class="graph">
+    </div>
+
+    <script type="text/javascript">
+      const dimensions = [document.documentElement.clientWidth, document.documentElement.clientHeight];
+      console.log(dimensions);
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const graph = document.querySelector('.graph');
+        graph.style.height = 0.9 * dimensions[1] + 'px';
+        graph.style.width =  0.9 * dimensions[0] + 'px';
+        const newItem = document.createElement('li');
+        newItem.style.position = 'fixed';
+        newItem.style.top = '100px';
+        graph.appendChild(newItem);
+      });
+    </script>
+  </body>
+</html>
