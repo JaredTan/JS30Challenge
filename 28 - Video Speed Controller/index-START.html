@@ -15,6 +15,25 @@
   </div>
 
 <script>
+  const speedBar = document.querySelector('.speed');
+  const speedMarker = document.querySelector('.speed-bar');
+  const video = document.querySelector('video');
+
+  const handleMove = function(e) {
+    const barTop = this.offsetTop;
+    const barHeight = this.offsetHeight;
+    const mouseY = e.pageY;
+    const percentOfBar = Math.round(((mouseY - barTop) / barHeight) * 100) + '%';
+    const max = 4;
+    const min = 0.4;
+    const playbackRate = ((mouseY - barTop) / barHeight) * (max - min) + min;
+    speedMarker.style.height = percentOfBar;
+    speedMarker.textContent = playbackRate.toFixed(2) + 'x';
+    video.playbackRate = playbackRate;
+  };
+
+  speedBar.addEventListener('mousemove', handleMove);
+
 </script>
 </body>
 </html>
