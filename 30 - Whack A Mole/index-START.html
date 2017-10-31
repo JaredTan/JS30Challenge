@@ -33,9 +33,51 @@
   </div>
 
 <script>
+  let done = false;
+  let prevHole;
+  let points = 0;
+  const moleUpTime = [500, 500];
   const holes = document.querySelectorAll('.hole');
   const scoreBoard = document.querySelector('.score');
   const moles = document.querySelectorAll('.mole');
+
+  const startGame = () => {
+    points = 0;
+    scoreBoard.textContent = points;
+    done = false;
+    setTimeout(() => done = true, 5000);
+    peek();
+  };
+
+  const peek = () => {
+    peekingHole = getRandomHole();
+    const randTime = Math.random() * (moleUpTime[1] - moleUpTime[0]) + moleUpTime[0];
+    peekingHole.classList.add('up');
+    setTimeout(() => {
+      peekingHole.classList.remove('up');
+      if (!done) {
+       peek();
+      }
+    }, randTime);
+  };
+
+  const getRandomHole = () => {
+    let nextHole = holes[Math.floor(Math.random() * holes.length)];
+    if (nextHole === prevHole) {
+      return getRandomHole;
+    }
+    return nextHole;
+  }
+
+  const handleMoleClick = function(e) {
+    if (!e.isTrusted) return;
+    points++;
+    this.parentNode.classList.remove('up');
+    scoreBoard.textContent = points;
+  }
+
+  moles.forEach(mole => mole.addEventListener('click', handleMoleClick))
+
 
 </script>
 </body>
