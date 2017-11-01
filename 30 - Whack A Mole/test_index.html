@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+
+    <button id='add'>+ Add</button>
+    <div id='container'></div>
+
+    <div style='display: none'>
+      <div class='progress'>
+        <div class='bar'></div>
+      </div>
+    </div>
+
+    <style>
+
+      #add {
+        padding: 10px;
+        font-size: 18px;
+      }
+
+      #container {
+        margin: 20px;
+      }
+
+      .progress {
+        margin: 0 0 10px;
+        width: 500px;
+        height: 20px;
+        background-color: #e0e0e0;
+      }
+
+      .progress .bar {
+        width: 0;
+        height: 100%;
+        background-color: blue;
+        transition: width 2s ease;
+      }
+
+      .progress.active .bar {
+        width: 100%;
+      }
+
+    </style>
+
+    <script type="text/javascript">
+      const addButton = document.getElementById('add');
+      const container = document.getElementById('container');
+      const progressBar = document.querySelector('.progress');
+
+      let promise = Promise.resolve();
+
+      // const handleClick = function(e) {
+      //   const newProgress = progressBar.cloneNode(true);
+      //   container.appendChild(newProgress);
+      //   promise = promise.then(() => new Promise((resolve) => {
+      //     setTimeout(() => {
+      // 	     newProgress.classList.add('active');
+      //        setTimeout(() => {resolve();}, 2000);
+      //      }, 0);
+      //    }));
+      // };
+
+      const handleClick = function(e) {
+        const newProgress = progressBar.cloneNode(true);
+        container.appendChild(newProgress);
+        setTimeout(() => {
+        	     newProgress.classList.add('active');
+             }, 0);
+      }
+
+      addButton.addEventListener('click', handleClick);
+    </script>
+
+  </body>
+</html>
